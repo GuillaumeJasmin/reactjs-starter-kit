@@ -9,7 +9,7 @@
     "start": "NODE_ENV=development webpack-dev-server --inline --history-api-fallback --host 0.0.0.0",
     "build-dev": "NODE_ENV=development webpack --progress -p",
     "build-prod": "NODE_ENV=production webpack --progress -p",
-    "build": "npm run build-prod",
+    "build": "yarn build-prod",
     "create-component": "node ./scripts/createComponent.js components",
     "create-container": "node ./scripts/createComponent.js containers",
     "create-page": "node ./scripts/createComponent.js pages"

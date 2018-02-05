@@ -1,7 +1,6 @@
 import React from 'react';
 import Nav from 'components/Nav';
 import classes from './Main.css';
-// import history from 'history';
 
 export default class MainLayout extends React.Component {
   componentDidMount() {

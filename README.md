@@ -2,34 +2,40 @@ ReactJS Starter Kit
 ===================
 
 * React 16
+* React Router 4
 * Webpack 3
 * ESLint with Airbnb rules
 * CSS Modules
 * PostCSS
 
+# Commands
 
-# install dependencies
+## install dependencies
 ```yarn install```
 
-# start local
+## start local
 ```yarn start```
 
-# build dev
+## build dev
 ```yarn build-dev```
 
-# build prod
+## build prod
 ```yarn build```
 
-# create component
+## create component
 ```yarn create-component ComponentName```
 
 If your component is in sub directory (components/Form/Button):
 ```yarn create-component Form/Button```
 
-# create container
+## create container
 ```yarn create-container ContainerName```
 
-# create page
+## create page
 ```yarn create-page PageName```
 
+# Env
 
+Create your env file config into /env folder.
+ 
+Only `hostname` is required

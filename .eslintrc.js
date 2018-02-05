@@ -1,4 +1,4 @@
-{
+module.exports = {
   "parser": "babel-eslint",
   "env": {
     "browser": true,
@@ -11,9 +11,9 @@
   ],
   "rules": {
     "import/no-extraneous-dependencies": 0,
-    // "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "import/extensions": 0,
     "class-methods-use-this": 1,
+    "no-console": [1, { "allow": ["warn", "error"] }],
     "react/prop-types": [2, {"ignore": ["children"]}],
     "react/prefer-stateless-function": 1,
     "jsx-a11y/anchor-is-valid": [ "error", {

@@ -9,7 +9,6 @@ function template(str, data) {
 
   let output = str;
 
-  // for (const match of matched) {
   for (let i = 0; i < matched.length; i += 1) {
     const match = matched[i];
     const key = match.replace('{{', '').replace('}}', '').trim();
@@ -40,7 +39,6 @@ const componentName = componentLocalPathArr[componentLocalPathArr.length - 1];
 
 componentLocalPath = componentLocalPathArr.join('/');
 
-// const componentName = ucfirst(args[3]);
 const folderName = args[2];
 
 const componentsPath = `./src/${folderName}/`;

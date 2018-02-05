@@ -1,3 +1,1 @@
-import {{componentName}} from './{{componentName}}.jsx';
-
-export default {{componentName}};
+export { default } from './{{componentName}}.jsx';

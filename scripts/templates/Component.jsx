@@ -10,7 +10,7 @@ export default class {{componentName}} extends React.PureComponent {
   //   super(props);
   // }
 
-  state = {};
+  // state = {};
 
   // componentWillMount() {}
   // componentDidMount() {}

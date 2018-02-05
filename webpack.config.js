@@ -1,13 +1,27 @@
 const Webpack = require('webpack');
+const fs = require('fs');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const postcssNested = require('postcss-nested');
 const customProperties = require('postcss-custom-properties');
-const vars = require('./src/vars.json');
+const vars = require('./src/config.json');
+
+const envs = {};
+fs.readdirSync('./env')
+  .filter(env => env.endsWith('.json'))
+  .forEach((filename) => {
+    const content = JSON.parse(fs.readFileSync(`./env/${filename}`));
+    const envName = filename.replace('.json', '');
+    envs[envName] = content;
+  });
 
 const isProd = process.env.NODE_ENV === 'production';
 const buildDir = path.resolve(__dirname, 'build');
+
+const now = new Date().toISOString();
+const suffixFiles = `?t=${now}`;
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './src/index.html',
@@ -18,6 +32,8 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 const envPlugin = new Webpack.DefinePlugin({
   'process.env': {
     NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+    CLIENT_ENVS: JSON.stringify(envs),
+    FORCE_CLIENT_ENV: JSON.stringify(process.env.FORCE_CLIENT_ENV),
   },
 });
 
@@ -35,11 +51,15 @@ const config = {
   entry: './src/index.js',
   output: {
     path: buildDir,
-    filename: 'app.bundle.js',
+    filename: `bundle.js${suffixFiles}`,
+    publicPath: '/',
+  },
+  devServer: {
+    historyApiFallback: true,
   },
   plugins: [
     HtmlWebpackPluginConfig,
-    new ExtractTextPlugin('styles.css'),
+    new ExtractTextPlugin(`styles.css${suffixFiles}`),
     envPlugin,
   ],
   module: {
@@ -66,6 +86,7 @@ const config = {
         options: {
           plugins: () => [
             autoprefixer,
+            postcssNested,
             customProperties({
               preserve: !isProd,
               variables: vars.styles,

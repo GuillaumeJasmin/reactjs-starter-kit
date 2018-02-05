@@ -1,0 +1,5 @@
+{
+  "hostname": "localhost",
+  "apiURL": "http://localhost:8080/",
+  "cookieToken": "authz_reactjs_local"
+}

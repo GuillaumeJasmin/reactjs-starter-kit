@@ -72,7 +72,7 @@ const config = {
       {
         test: /(\.jsx|\.js)$/,
         loader: 'eslint-loader',
-        exclude: /node_modules/,
+        include: /src/,
       },
       {
         test: /\.css$/,

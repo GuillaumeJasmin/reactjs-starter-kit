@@ -1,5 +1,4 @@
 const Webpack = require('webpack');
-const fs = require('fs');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -7,41 +6,51 @@ const autoprefixer = require('autoprefixer');
 const postcssNested = require('postcss-nested');
 const customProperties = require('postcss-custom-properties');
 const vars = require('./src/config.json');
+// const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 
-const envs = {};
-fs.readdirSync('./env')
-  .filter(env => env.endsWith('.json'))
-  .forEach((filename) => {
-    const content = JSON.parse(fs.readFileSync(`./env/${filename}`));
-    const envName = filename.replace('.json', '');
-    envs[envName] = content;
-  });
-
-const isProd = process.env.NODE_ENV === 'production';
-const buildDir = path.resolve(__dirname, 'build');
-
+const NODE_ENV = process.env.NODE_ENV || 'production';
+const isDevServer = process.argv[1].indexOf('webpack-dev-server') !== -1;
 const now = new Date().toISOString();
 const suffixFiles = `?t=${now}`;
 
-const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+/**
+ *_________________________________________________________________________________
+ *
+ *                              Webpack plugins
+ *_________________________________________________________________________________
+ */
+const plugins = [];
+
+// Inject script into index.html
+plugins.push(new HtmlWebpackPlugin({
   template: './src/index.html',
   filename: 'index.html',
   inject: 'body',
-});
+}));
 
-const envPlugin = new Webpack.DefinePlugin({
+
+// env.js. Incomment the next line to activate it
+// plugins.push(new HtmlWebpackIncludeAssetsPlugin({ assets: ['env.js'], append: false }));
+
+
+// NODE_ENV
+plugins.push(new Webpack.DefinePlugin({
   'process.env': {
-    NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-    CLIENT_ENVS: JSON.stringify(envs),
-    FORCE_CLIENT_ENV: JSON.stringify(process.env.FORCE_CLIENT_ENV),
+    NODE_ENV: JSON.stringify(NODE_ENV),
   },
-});
+}));
 
-const cssLocalIdentName = isProd
+// inject style.css into index.html
+plugins.push(new ExtractTextPlugin(`styles.css${suffixFiles}`));
+
+/* _________________________________________________________________________________ */
+
+const cssLocalIdentName = !isDevServer
   ? '[path]___[name]__[local]___[hash:base64:5]'
   : '[path]___[name]__[local]';
 
 const config = {
+  mode: NODE_ENV,
   resolve: {
     modules: [
       path.resolve('./src'),
@@ -50,20 +59,17 @@ const config = {
   },
   entry: './src/index.js',
   output: {
-    path: buildDir,
+    path: path.resolve(__dirname, 'build'),
     filename: `bundle.js${suffixFiles}`,
     publicPath: '/',
   },
   devServer: {
     historyApiFallback: true,
+    host: '0.0.0.0',
   },
-  plugins: [
-    HtmlWebpackPluginConfig,
-    new ExtractTextPlugin(`styles.css${suffixFiles}`),
-    envPlugin,
-  ],
+  plugins,
   module: {
-    loaders: [
+    rules: [
       {
         test: /(\.jsx|\.js)$/,
         loader: 'babel-loader',
@@ -73,6 +79,10 @@ const config = {
         test: /(\.jsx|\.js)$/,
         loader: 'eslint-loader',
         include: /src/,
+        options: {
+          // turn eslint warning into error outside local environment
+          failOnWarning: !isDevServer,
+        },
       },
       {
         test: /\.css$/,
@@ -88,16 +98,11 @@ const config = {
             autoprefixer,
             postcssNested,
             customProperties({
-              preserve: !isProd,
               variables: vars.styles,
               appendVariables: true,
             }),
           ],
         },
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader',
       },
     ],
   },

@@ -13,6 +13,5 @@ export default () => (
         <Link to="/about">About</Link>
       </li>
     </ul>
-
   </nav>
 );

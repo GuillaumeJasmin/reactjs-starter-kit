@@ -1,7 +1,14 @@
 .list {
   display: flex;
+  margin: 5px;
 }
 
-.item {
-  padding: 10px;
+.item a {
+  padding: 5px 10px;
+  margin: 5px;
+  display: block;
+  text-decoration: none;
+  background-color: var(--color-mainColor);
+  color: #fff;
+  border-radius: 3px;
 }

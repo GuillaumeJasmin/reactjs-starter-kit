@@ -1,3 +1,1 @@
-import Nav from './Nav.jsx';
-
-export default Nav;
+export { default } from './Nav.jsx';

@@ -44,5 +44,5 @@ To enable that:
   ```
 
 
-*** Note: if you want to change the env var name on `window`, rename it in [src/core/settings](./src/core/settings/index.js) ***
+*Note: if you want to change the env var name on `window`, rename it in [src/core/settings](./src/core/settings/index.js)*
 

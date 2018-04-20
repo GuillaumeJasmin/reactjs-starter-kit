@@ -9,6 +9,7 @@ ReactJS Starter Kit
 * PostCSS
   * autoprefixer
   * nested css
+  * vars from `config.json`
 
 # Build
 

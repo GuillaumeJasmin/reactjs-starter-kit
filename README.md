@@ -10,6 +10,7 @@ ReactJS Starter Kit
   * autoprefixer
   * nested css
   * vars from `config.json`
+* Unit test with jest
 
 # Build
 
@@ -24,6 +25,9 @@ ReactJS Starter Kit
 
 ### build prod
 ```npm run build```
+
+### run test
+```npm run test```
 
 ### remove build folder
 ```run run clean```

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home must always be the same 1`] = `
+<div
+  className="container"
+>
+  <div>
+    Welcome on Home
+  </div>
+</div>
+`;

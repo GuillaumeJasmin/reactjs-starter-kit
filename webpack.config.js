@@ -6,12 +6,9 @@ const autoprefixer = require('autoprefixer');
 const postcssNested = require('postcss-nested');
 const customProperties = require('postcss-custom-properties');
 const vars = require('./src/config.json');
-// const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 
 const NODE_ENV = process.env.NODE_ENV || 'production';
 const isDevServer = process.argv[1].indexOf('webpack-dev-server') !== -1;
-const now = new Date().toISOString();
-const suffixFiles = `?t=${now}`;
 
 /**
  *_________________________________________________________________________________
@@ -29,10 +26,6 @@ plugins.push(new HtmlWebpackPlugin({
 }));
 
 
-// env.js. Incomment the next line to activate it
-// plugins.push(new HtmlWebpackIncludeAssetsPlugin({ assets: ['env.js'], append: false }));
-
-
 // NODE_ENV
 plugins.push(new Webpack.DefinePlugin({
   'process.env': {
@@ -41,7 +34,7 @@ plugins.push(new Webpack.DefinePlugin({
 }));
 
 // inject style.css into index.html
-plugins.push(new ExtractTextPlugin(`styles.css${suffixFiles}`));
+plugins.push(new ExtractTextPlugin('styles.[hash].css'));
 
 /* _________________________________________________________________________________ */
 
@@ -60,7 +53,7 @@ const config = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: `bundle.js${suffixFiles}`,
+    filename: 'bundle.[hash].js',
     publicPath: '/',
   },
   devServer: {
@@ -73,26 +66,30 @@ const config = {
       {
         test: /(\.jsx|\.js)$/,
         loader: 'babel-loader',
-        exclude: /node_modules/,
+        include: [path.resolve(__dirname, 'src')],
       },
       {
         test: /(\.jsx|\.js)$/,
         loader: 'eslint-loader',
-        include: /src/,
-        options: {
-          // turn eslint warning into error outside local environment
-          failOnWarning: !isDevServer,
-        },
+        include: [path.resolve(__dirname, 'src')],
+      },
+      {
+        // This make possible to import the css from a node_modules package.
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract(['css-loader?importLoaders=1']),
+        include: /node_modules/,
       },
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract([
           `css-loader?modules&importLoaders=1&localIdentName=${cssLocalIdentName}`,
         ]),
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
         loader: 'postcss-loader',
+        exclude: /node_modules/,
         options: {
           plugins: () => [
             autoprefixer,

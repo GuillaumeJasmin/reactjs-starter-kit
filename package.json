@@ -1,6 +1,6 @@
 {
   "name": "reactjs-starter-kit",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "React Starter kit",
   "main": "index.js",
   "author": "Guillaume Jasmin",
@@ -9,11 +9,8 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server",
     "build:dev": "cross-env NODE_ENV=development webpack --progress",
     "build:prod": "cross-env NODE_ENV=production webpack --progress",
-    "build": "yarn build:prod",
-    "clean": "rm -r ./build",
-    "create-component": "node ./scripts/createComponent.js components",
-    "create-container": "node ./scripts/createComponent.js containers",
-    "create-page": "node ./scripts/createComponent.js pages"
+    "build": "npm run build:prod",
+    "clean": "rm -r ./build"
   },
   "dependencies": {
     "history": "4.7.2",
@@ -31,7 +28,7 @@
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-preset-es2017": "6.24.1",
     "babel-preset-react": "6.24.1",
-    "cross-env": "^5.1.4",
+    "cross-env": "5.1.4",
     "css-loader": "0.28.11",
     "eslint": "4.19.1",
     "eslint-config-airbnb": "16.1.0",
@@ -40,8 +37,7 @@
     "eslint-plugin-import": "2.11.0",
     "eslint-plugin-jsx-a11y": "6.0.3",
     "eslint-plugin-react": "7.7.0",
-    "extract-text-webpack-plugin": "4.0.0-alpha.0",
-    "html-webpack-include-assets-plugin": "1.0.4",
+    "extract-text-webpack-plugin": "4.0.0-beta.0",
     "html-webpack-plugin": "3.2.0",
     "path": "0.12.7",
     "postcss": "6.0.21",

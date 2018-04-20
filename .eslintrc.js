@@ -15,7 +15,7 @@ module.exports = {
     "class-methods-use-this": 1,
     "no-console": [1, { "allow": ["warn", "error"] }],
     "react/prop-types": [2, {"ignore": ["children"]}],
-    "react/prefer-stateless-function": 1,
+    "react/prefer-stateless-function": 0,
     "jsx-a11y/anchor-is-valid": [ "error", {
       "components": [ "Link" ],
       "specialLink": [ "to" ]

@@ -1,37 +1,15 @@
-ReactJS Starter Kit
-===================
+# ReactJS Starter Kit
 
-* React 16
-* React Router 4
-* Webpack 4
-* ESLint with Airbnb rules
-* CSS Modules
-* PostCSS
-  * autoprefixer
-  * nested css
-  * vars from `config.json`
-* Unit test with jest
+- React 16
+- Webpack 4
+- Babel 7
 
 # Build
 
 ### install dependencies
-```npm install```
 
-### start local (watch)
-```yarn start```
+`yarn install`
 
-### build dev
-```npm run build:dev```
+### start local development
 
-### build prod
-```npm run build```
-
-### run test
-```npm run test```
-
-### remove build folder
-```run run clean```
-
-# Additional tools and best practices
-[store env settings outside repository](docs/env-settings.md)
-
+`yarn start`
